@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Navidad</title>
+    <title>Feliz Navidad - Densidad Mágica</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&display=swap');
 
@@ -22,23 +22,22 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* El marco dorado elegante */
+        /* Marco dorado elegante */
         .gold-frame {
             position: relative;
             padding: 40px;
             max-width: 90%;
             width: 650px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
             border: 2px solid #d4af37;
             box-shadow: 
-                0 0 30px rgba(212, 175, 55, 0.4),
+                0 0 40px rgba(212, 175, 55, 0.4),
                 inset 0 0 20px rgba(212, 175, 55, 0.4);
             z-index: 100;
             backdrop-filter: blur(8px);
         }
 
-        /* Brillos en las esquinas del marco */
         .gold-frame::before, .gold-frame::after {
             content: '';
             position: absolute;
@@ -56,15 +55,13 @@
             font-family: 'Great Vibes', cursive;
             font-size: clamp(2.5rem, 8vw, 4rem);
             margin: 0 0 20px 0;
-            font-weight: 400;
             text-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
         p {
             color: #f0f0f0;
-            font-size: clamp(1rem, 3.8vw, 1.25rem);
+            font-size: clamp(1rem, 3.8vw, 1.2rem);
             line-height: 1.8;
-            font-family: 'Cinzel', serif;
             margin: 15px 0;
             font-style: italic;
         }
@@ -75,10 +72,9 @@
             font-size: clamp(2rem, 7vw, 2.8rem);
             display: block;
             margin-top: 25px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
 
-        /* Estilo de los nombres voladores */
+        /* Nombres voladores */
         .nombre-nieve {
             position: absolute;
             top: -15vh;
@@ -88,7 +84,6 @@
             font-family: 'Great Vibes', cursive;
             transform-style: preserve-3d;
             animation: vueloEvolutivo linear forwards;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
         }
 
         @keyframes vueloEvolutivo {
@@ -98,11 +93,21 @@
             100% { transform: translateY(115vh) rotateX(720deg) rotateY(360deg) rotateZ(180deg); opacity: 0; }
         }
 
+        /* Luces Bokeh Dinámicas y Densas */
         .bokeh {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
+            opacity: 0;
+            filter: blur(2px);
+            animation: titileo ease-in-out forwards;
+        }
+
+        @keyframes titileo {
+            0% { opacity: 0; transform: scale(0.5); }
+            30% { opacity: 0.5; }
+            70% { opacity: 0.5; }
+            100% { opacity: 0; transform: scale(1.3); }
         }
     </style>
 </head>
@@ -127,17 +132,13 @@
             const el = document.createElement('div');
             el.className = 'nombre-nieve';
             el.innerText = nombres[Math.floor(Math.random() * nombres.length)];
-
-            const duracion = Math.random() * 7 + 10; 
+            const duracion = Math.random() * 6 + 10; 
             el.style.left = (Math.random() * 85 + 5) + "vw";
             el.style.animationDuration = duracion + "s";
-            
-            const size = Math.random() * 1.5 + 2.5; 
+            const size = Math.random() * 2.8 + 2.5; 
             el.style.fontSize = size + "rem";
-            
             const colores = ['#ffffff', '#d4af37', '#ffb3b3', '#f8f1d1'];
             el.style.color = colores[Math.floor(Math.random() * colores.length)];
-            
             document.body.appendChild(el);
             setTimeout(() => el.remove(), duracion * 1000);
         }
@@ -145,17 +146,38 @@
         function crearBokeh() {
             const b = document.createElement('div');
             b.className = 'bokeh';
-            const size = Math.random() * 100 + 50;
+            
+            const size = Math.random() * 150 + 50; 
+            const duracion = Math.random() * 3 + 3; // Ciclo más rápido para que siempre haya movimiento
+            
             b.style.width = size + "px";
             b.style.height = size + "px";
             b.style.left = Math.random() * 100 + "vw";
             b.style.top = Math.random() * 100 + "vh";
-            b.style.opacity = Math.random() * 0.4;
+            b.style.animationDuration = duracion + "s";
+            
+            const matices = [
+                'radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)',
+                'radial-gradient(circle, rgba(212,175,55,0.3) 0%, transparent 70%)',
+                'radial-gradient(circle, rgba(255,200,200,0.2) 0%, transparent 70%)'
+            ];
+            b.style.background = matices[Math.floor(Math.random() * matices.length)];
+
             document.body.appendChild(b);
+
+            setTimeout(() => {
+                b.remove();
+                crearBokeh(); // Reemplazo inmediato
+            }, duracion * 1000);
         }
 
-        for(let i=0; i<25; i++) crearBokeh();
-        setInterval(crearNombre, 450); 
+        // Intervalo de nombres constante
+        setInterval(crearNombre, 400); 
+
+        // Generar 50 luces iniciales escalonadas para llenar la pantalla rápido
+        for(let i=0; i<50; i++) {
+            setTimeout(crearBokeh, Math.random() * 3000);
+        }
     </script>
 </body>
 </html>
