@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Navidad para Todos</title>
+    <title>Feliz Navidad</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Great+Vibes&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&display=swap');
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -17,101 +19,115 @@
             align-items: center;
             overflow: hidden;
             perspective: 1500px;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Cinzel', serif;
         }
 
-        /* Tarjeta de mensaje central */
-        .mensaje-card {
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid #d4af37;
-            max-width: 85%;
-            width: 550px;
-            text-align: center;
-            z-index: 100;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        /* El marco dorado elegante */
+        .gold-frame {
             position: relative;
+            padding: 40px;
+            max-width: 90%;
+            width: 600px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #d4af37;
+            box-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.4),
+                inset 0 0 20px rgba(212, 175, 55, 0.4);
+            z-index: 100;
+            backdrop-filter: blur(5px);
         }
+
+        /* Brillos en las esquinas del marco */
+        .gold-frame::before, .gold-frame::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #fff9e6 0%, transparent 70%);
+            filter: blur(5px);
+            opacity: 0.8;
+        }
+        .gold-frame::before { top: -10px; left: -10px; }
+        .gold-frame::after { bottom: -10px; right: -10px; }
 
         h1 {
-            font-family: 'Mountains of Christmas', cursive;
-            color: #ff4d4d;
-            font-size: clamp(1.8rem, 6vw, 3rem);
-            margin: 0 0 1rem 0;
-            text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+            color: #ffffff;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
         p {
-            color: #ffffff;
-            font-size: clamp(0.9rem, 3.5vw, 1.15rem);
-            line-height: 1.6;
-            margin: 15px 0;
+            color: #e0e0e0;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            line-height: 1.8;
+            font-family: 'Cinzel', serif;
+            margin: 10px 0;
+            font-style: italic;
         }
 
-        .firma {
+        .highlight {
             font-family: 'Great Vibes', cursive;
             color: #d4af37;
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             display: block;
-            margin-top: 15px;
+            margin-top: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* Nombres en caída densa */
+        /* Estilo de los nombres voladores */
         .nombre-nieve {
             position: absolute;
             top: -15vh;
-            font-family: 'Mountains of Christmas', cursive;
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
+            font-family: 'Great Vibes', cursive; /* Tipografía cursiva elegante como la imagen */
             transform-style: preserve-3d;
             animation: vueloEvolutivo linear forwards;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
         }
 
         @keyframes vueloEvolutivo {
             0% {
-                transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                transform: translateY(0) rotateX(0deg) rotateY(0deg);
                 opacity: 0;
             }
-            5% { opacity: 1; }
+            10% { opacity: 1; }
             
-            /* Hasta la mitad: Legible, giro suave en Y */
+            /* Mitad: Legible y con inclinación elegante */
             50% {
-                transform: translateY(50vh) rotateX(0deg) rotateY(180deg) rotateZ(5deg);
+                transform: translateY(50vh) rotateX(0deg) rotateY(180deg) rotateZ(10deg);
                 opacity: 1;
             }
 
-            /* Final: Rotación completa 3D y desvanecimiento */
+            /* Final: Rotación completa 3D */
             100% {
-                transform: translateY(115vh) rotateX(540deg) rotateY(720deg) rotateZ(180deg);
+                transform: translateY(115vh) rotateX(720deg) rotateY(360deg) rotateZ(180deg);
                 opacity: 0;
             }
         }
 
-        /* Partículas de brillo de fondo */
-        .brillo {
+        /* Partículas de luz (Bokehs) */
+        .bokeh {
             position: absolute;
-            background: white;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
             border-radius: 50%;
-            filter: blur(1px);
-            animation: parpadeo 3s infinite;
+            pointer-events: none;
         }
 
-        @keyframes parpadeo {
-            0%, 100% { opacity: 0.1; }
-            50% { opacity: 0.6; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="mensaje-card">
-        <h1>🎄🎄¡Feliz Navidad! 🎄🎄</h1>
+    <div class="gold-frame">
+        <h1>¡Les deseo una muy feliz navidad!</h1>
         <p>Gracias a cada uno de ustedes por haberme permitido ser parte de su vida en este tiempo.</p>
         <p>Esto es el inicio de una nueva etapa y espero de corazón que sea grandiosa.</p>
-        <span class="firma">Con mucho cariño...</span>
+        <span class="highlight">Que la paz, la salud y la alegría iluminen sus hogares hoy y siempre.</span>
     </div>
 
     <script>
@@ -124,47 +140,40 @@
         function crearNombre() {
             const el = document.createElement('div');
             el.className = 'nombre-nieve';
-            // Selecciona un nombre al azar
             el.innerText = nombres[Math.floor(Math.random() * nombres.length)];
 
-            // Configuración de caída lenta (12 a 20 segundos)
-            const duracion = Math.random() * 8 + 12; 
-            
-            // Posición y estilo visual
+            const duracion = Math.random() * 7 + 10; 
             el.style.left = (Math.random() * 80 + 5) + "vw";
             el.style.animationDuration = duracion + "s";
             
-            // Variedad de tamaños para efecto de profundidad (capas)
-            const size = Math.random() * 0.9 + 1.8; // entre 0.8rem y 1.5rem
+            // Tamaños variados
+            const size = Math.random() * 0.8 + 1.2;
             el.style.fontSize = size + "rem";
             
-            // Colores navideños
-            const colores = ['#ffffff', '#ffd700', '#ffcccc', '#e0e0e0'];
+            // Colores de la imagen: Dorado, Blanco y un Rojo suave
+            const colores = ['#ffffff', '#d4af37', '#ff4d4d', '#f8f1d1'];
             el.style.color = colores[Math.floor(Math.random() * colores.length)];
             
-            // Profundidad visual (Z-index aleatorio para que se crucen entre ellos)
-            el.style.zIndex = Math.floor(Math.random() * 10);
-
             document.body.appendChild(el);
-
-            // Eliminar al terminar para no saturar el navegador
             setTimeout(() => el.remove(), duracion * 1000);
         }
 
-        // Crear ambiente de fondo
-        for(let i=0; i<60; i++) {
+        // Crear efectos de luces desenfocadas (Bokeh)
+        function crearBokeh() {
             const b = document.createElement('div');
-            b.className = 'brillo';
-            b.style.width = Math.random() * 3 + "px";
-            b.style.height = b.style.width;
+            b.className = 'bokeh';
+            const size = Math.random() * 100 + 50;
+            b.style.width = size + "px";
+            b.style.height = size + "px";
             b.style.left = Math.random() * 100 + "vw";
             b.style.top = Math.random() * 100 + "vh";
-            b.style.animationDelay = Math.random() * 5 + "s";
+            b.style.opacity = Math.random() * 0.5;
             document.body.appendChild(b);
         }
 
-        // GENERACIÓN TUPIDA: Se crea un nombre cada 400 milisegundos
-        setInterval(crearNombre, 400);
+        // Inicializar
+        for(let i=0; i<20; i++) crearBokeh();
+        setInterval(crearNombre, 450); // Frecuencia tupida
     </script>
 </body>
 </html>
